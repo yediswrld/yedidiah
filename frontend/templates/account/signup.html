@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up — Yedidiah{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="form-container">
+    <div class="section-label">
+      <span>Get Started</span>
+      <div class="label-line"></div>
+    </div>
+    <h1 class="form-heading">Create <em>Account</em></h1>
+    <p class="form-sub">Already have an account? <a href="/accounts/login/" style="color:var(--gold);text-decoration:none;">Sign In</a></p>
+
+    <form method="post" action="." class="styled-form">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <span class="form-error">{{ field.errors.0 }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      {% if form.non_field_errors %}
+        <div class="form-error" style="margin-top:-10px;">{{ form.non_field_errors.0 }}</div>
+      {% endif %}
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;width:100%;margin-top:10px;">
+        <span>Create Account</span>
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}

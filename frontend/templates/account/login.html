@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Sign In — Yedidiah{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="form-container">
+    <div class="section-label">
+      <span>Welcome Back</span>
+      <div class="label-line"></div>
+    </div>
+    <h1 class="form-heading">Sign <em>In</em></h1>
+    <p class="form-sub">Don't have an account? <a href="/accounts/signup/" style="color:var(--gold);text-decoration:none;">Sign Up</a></p>
+
+    <form method="post" action="." class="styled-form">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <span class="form-error">{{ field.errors.0 }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      {% if form.non_field_errors %}
+        <div class="form-error" style="margin-top:-10px;">{{ form.non_field_errors.0 }}</div>
+      {% endif %}
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;width:100%;margin-top:10px;">
+        <span>Sign In</span>
+      </button>
+    </form>
+
+    <p style="margin-top:24px;font-size:13px;color:var(--muted);">
+      <a href="/accounts/password/reset/" style="color:var(--gold-dim);text-decoration:none;">Forgot your password?</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

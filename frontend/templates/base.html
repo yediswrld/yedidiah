@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Yedidiah | Forex Mentorship{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="/" class="nav-logo">Yedidiah</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#mentorship">Mentorship</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    {% if user.is_authenticated %}
+      <li><a href="/dashboard/">Dashboard</a></li>
+      <li><a href="/accounts/logout/">Logout</a></li>
+    {% else %}
+      <li><a href="/accounts/login/">Login</a></li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="message message-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<footer>
+  <div class="footer-logo">Yedidiah</div>
+  <div class="footer-copy">© 2025 · Logic over patterns and emotions</div>
+</footer>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

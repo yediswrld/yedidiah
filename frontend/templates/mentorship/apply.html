@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Apply — Yedidiah Mentorship{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="form-container">
+    <div class="section-label">
+      <span>Apply</span>
+      <div class="label-line"></div>
+    </div>
+    <h1 class="form-heading">Mentorship <em>Application</em></h1>
+    <p class="form-sub">Fill in the form below. I personally review every application.</p>
+
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <span class="form-error">{{ field.errors.0 }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;width:100%;margin-top:10px;">
+        <span>Submit Application</span>
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}

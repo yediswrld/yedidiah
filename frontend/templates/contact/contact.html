@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Contact — Yedidiah{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="form-container">
+    <div class="section-label">
+      <span>Contact</span>
+      <div class="label-line"></div>
+    </div>
+    <h1 class="form-heading">Send a <em>Message</em></h1>
+    <p class="form-sub">Have a question? Drop a message and I'll get back to you.</p>
+
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <span class="form-error">{{ field.errors.0 }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn-primary" style="border:none;cursor:pointer;width:100%;margin-top:10px;">
+        <span>Send Message</span>
+      </button>
+    </form>
+  </div>
+</section>
+{% endblock %}

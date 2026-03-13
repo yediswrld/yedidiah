@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — Yedidiah{% endblock %}
+
+{% block content %}
+<section class="form-section">
+  <div class="dashboard-container">
+    <div class="section-label">
+      <span>Dashboard</span>
+      <div class="label-line"></div>
+    </div>
+    <h1 class="form-heading">Welcome, <em>{{ user.full_name }}</em></h1>
+
+    <!-- Mentorship Status -->
+    <div class="dashboard-card">
+      <div class="dashboard-card-label">Mentorship Status</div>
+      {% if user.mentorship_active %}
+        <div class="status-badge status-active">Active ✓</div>
+        <p style="color:var(--muted);font-size:14px;margin-top:12px;">You have full access to all mentorship resources.</p>
+      {% else %}
+        <div class="status-badge status-inactive">Inactive</div>
+        <p style="color:var(--muted);font-size:14px;margin-top:12px;">Complete payment to activate your mentorship access.</p>
+        <a href="/payments/checkout/" class="btn-primary" style="display:inline-block;margin-top:20px;"><span>Pay Now (Crypto)</span></a>
+      {% endif %}
+    </div>
+
+    <!-- Application Status -->
+    {% if application %}
+    <div class="dashboard-card">
+      <div class="dashboard-card-label">Application</div>
+      <p style="color:var(--white);font-size:15px;">Status: <strong style="color:var(--gold);">{{ application.get_status_display }}</strong></p>
+      <p style="color:var(--muted);font-size:13px;margin-top:8px;">Submitted: {{ application.created_at|date:"N j, Y" }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Payment History -->
+    {% if payments %}
+    <div class="dashboard-card">
+      <div class="dashboard-card-label">Payment History</div>
+      <table class="dashboard-table">
+        <thead>
+          <tr><th>Date</th><th>Amount</th><th>Currency</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for payment in payments %}
+          <tr>
+            <td>{{ payment.created_at|date:"N j, Y" }}</td>
+            <td>${{ payment.price_amount }}</td>
+            <td>{{ payment.pay_currency|upper }}</td>
+            <td><span class="status-badge status-{{ payment.status }}">{{ payment.status|capfirst }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}
